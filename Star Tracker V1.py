@@ -3,28 +3,6 @@ import numpy as np
 import math
 import statistics
 import itertools
-# Ref img must be simple
-# ref_img = cv2.imread("orion-3.jpg")
-# refgray = cv2.cvtColor(ref_img, cv2.COLOR_BGR2GRAY)
-# ref, refthresh = cv2.threshold(refgray, 175, 255, cv2.THRESH_BINARY)
-# refcontours, refheirarchies = cv2.findContours(refthresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-# refcenters = []
-# for contour in refcontours:
-#     M1 = cv2.moments(contour)
-#     if M1["m00"] != 0:
-#         cX1 = int(M1["m10"] / M1["m00"])
-#         cY1 = int(M1["m01"] / M1["m00"])
-#         cW1 = int(M1["m10"]+M1["m01"])
-#         refcenters.append((cX1, cY1))
-# refbright_stars = refcenters
-# refpairs = [tuple(x + y) for x, y in itertools.combinations(refbright_stars, 2)]
-# refdistances = []
-# for i in range(len(refpairs)):
-#     x,y,x1,y1 = refpairs[i]
-#     refdistances.append(math.sqrt(abs((x-x1)**2)+abs((y-y1)**2)))
-# ref_ratio = [x/y for x,y in itertools.permutations(refdistances,2)]
-# rounded_ref = [round(num, 10) for num in ref_ratio]
-# cv2.imshow("Reference", ref_img)
 
 def image_input(stars_img):
     # Setting up the frame to rotate without being cut out
