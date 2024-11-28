@@ -3,6 +3,41 @@ import numpy as np
 import math
 import statistics
 from itertools import permutations
+ref_img = cv2.imread("Sky-view-constellation-Orion.webp")
+gray = cv2.cvtColor(ref_img, cv2.COLOR_BGR2GRAY)
+ret, thresh = cv2.threshold(gray, 175, 255, cv2.THRESH_BINARY)
+contours, heirarchies = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+centers = []
+star_brightness = []
+
+for contour in contours:
+    M = cv2.moments(contour) # Finds the weight of the x and y coordinates
+    if M["m00"] != 0:
+        cX = int(M["m10"] / M["m00"]) # m10 is weighted sum of x divided by m00, the area
+        cY = int(M["m01"] / M["m00"]) # m01 is weighted sum of y
+        cW = int(M["m10"]+M["m01"])
+        centers.append((cX, cY))
+        star_brightness.append(cW)
+
+avg = statistics.mean(star_brightness)
+bright_stars = []
+
+for a in range(len(centers)):
+    if star_brightness[a] > avg*3:
+        x,y = centers[a]
+        bright_stars.append((x,y))
+
+# List of all distances between all stars
+refpairs = [tuple(x + y) for x, y in permutations(bright_stars, 2)]
+distances = []
+
+for i in range(len(refpairs)):
+    x,y,x1,y1 = refpairs[i]
+    distances.append(math.sqrt(abs((x-x1)**2)+abs((y-y1)**2)))
+
+# ratio between distances
+ref_ratio = [x/y for x,y in permutations(distances,2)]
 
 stars_img = cv2.imread("Sky-view-constellation-Orion.webp")
 
@@ -58,8 +93,6 @@ else:
     for i in range(len(centers)-1):
         cv2.line(recolor, centers[i], centers[i+1], (0, 0, 255), 2)
 
-# ratio between stars
-star_ratio = []
 
 # List of all distances between all stars
 starpairs = [tuple(x + y) for x, y in permutations(bright_stars, 2)]
@@ -71,7 +104,7 @@ for i in range(len(starpairs)):
 
 # ratio between distances
 star_ratio = [x/y for x,y in permutations(distances,2)]
-print(len(star_ratio))
+
 
 cv2.imshow("", recolor)
 
