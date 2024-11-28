@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import math
 import statistics
+from itertools import permutations
 
 stars_img = cv2.imread("Sky-view-constellation-Orion.webp")
 
@@ -60,15 +61,17 @@ else:
 # ratio between stars
 star_ratio = []
 
-for i in range(len(bright_stars)-2):
-    x,y = bright_stars[i]
-    x1,y1 = bright_stars[i+1]
-    x2,y2 = bright_stars[i+2]
-    distance1 = math.sqrt(abs((x-x1)**2)+abs((y-y1)**2))
-    distance2 = math.sqrt(abs((x1-x2)**2)+abs((y1-y2)**2))
-    star_ratio.append(distance1/distance2)
+# List of all distances between all stars
+starpairs = [tuple(x + y) for x, y in permutations(bright_stars, 2)]
+distances = []
 
-print(star_ratio)
+for i in range(len(starpairs)):
+    x,y,x1,y1 = starpairs[i]
+    distances.append(math.sqrt(abs((x-x1)**2)+abs((y-y1)**2)))
+
+# ratio between distances
+star_ratio = [x/y for x,y in permutations(distances,2)]
+print(len(star_ratio))
 
 cv2.imshow("", recolor)
 
