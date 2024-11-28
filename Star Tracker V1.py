@@ -6,12 +6,12 @@ from itertools import permutations
 ref_img = cv2.imread("Sky-view-constellation-Orion.webp")
 gray = cv2.cvtColor(ref_img, cv2.COLOR_BGR2GRAY)
 ret, thresh = cv2.threshold(gray, 175, 255, cv2.THRESH_BINARY)
-contours, heirarchies = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+refcontours, heirarchies = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
 centers = []
 star_brightness = []
 
-for contour in contours:
+for contour in refcontours:
     M = cv2.moments(contour) # Finds the weight of the x and y coordinates
     if M["m00"] != 0:
         cX = int(M["m10"] / M["m00"]) # m10 is weighted sum of x divided by m00, the area
@@ -104,7 +104,6 @@ for i in range(len(starpairs)):
 
 # ratio between distances
 star_ratio = [x/y for x,y in permutations(distances,2)]
-
 
 cv2.imshow("", recolor)
 
