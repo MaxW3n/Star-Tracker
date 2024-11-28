@@ -57,6 +57,19 @@ else:
     for i in range(len(centers)-1):
         cv2.line(recolor, centers[i], centers[i+1], (0, 0, 255), 2)
 
+# ratio between stars
+star_ratio = []
+
+for i in range(len(bright_stars)-2):
+    x,y = bright_stars[i]
+    x1,y1 = bright_stars[i+1]
+    x2,y2 = bright_stars[i+2]
+    distance1 = math.sqrt(abs((x-x1)**2)+abs((y-y1)**2))
+    distance2 = math.sqrt(abs((x1-x2)**2)+abs((y1-y2)**2))
+    star_ratio.append(distance1/distance2)
+
+print(star_ratio)
+
 cv2.imshow("", recolor)
 
 cv2.waitKey(0)
