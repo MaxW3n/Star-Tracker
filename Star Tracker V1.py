@@ -62,7 +62,9 @@ def image_input(stars_img):
     return [round(num, 10) for num in star_ratio]
 
 rounded_ref = image_input(cv2.imread("orion-3.jpg"))
+cv2.waitKey(0)
 rounded_stars = image_input(cv2.imread("Orion-Constellation-1024x576.jpg"))
+cv2.waitKey(0)
 rounded_negative = image_input(cv2.imread("negative.jpg"))
 
 # cross referencing reference with image
