@@ -2,8 +2,7 @@ import cv2
 import numpy as np
 import math
 import statistics
-from itertools import permutations
-
+import itertools
 # Ref img must be simple
 ref_img = cv2.imread("orion-3.jpg")
 refgray = cv2.cvtColor(ref_img, cv2.COLOR_BGR2GRAY)
@@ -11,24 +10,23 @@ ref, refthresh = cv2.threshold(refgray, 175, 255, cv2.THRESH_BINARY)
 refcontours, refheirarchies = cv2.findContours(refthresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 refcenters = []
 for contour in refcontours:
-    M = cv2.moments(contour)
-    if M["m00"] != 0:
-        cX = int(M["m10"] / M["m00"])
-        cY = int(M["m01"] / M["m00"])
-        cW = int(M["m10"]+M["m01"])
-        refcenters.append((cX, cY))
-bright_stars = []
-for a in range(len(refcenters)):
-        x,y = refcenters[a]
-        bright_stars.append((x,y))
-refpairs = [tuple(x + y) for x, y in permutations(bright_stars, 2)]
+    M1 = cv2.moments(contour)
+    if M1["m00"] != 0:
+        cX1 = int(M1["m10"] / M1["m00"])
+        cY1 = int(M1["m01"] / M1["m00"])
+        cW1 = int(M1["m10"]+M1["m01"])
+        refcenters.append((cX1, cY1))
+refbright_stars = refcenters
+refpairs = [tuple(x + y) for x, y in itertools.combinations(refbright_stars, 2)]
 refdistances = []
 for i in range(len(refpairs)):
     x,y,x1,y1 = refpairs[i]
     refdistances.append(math.sqrt(abs((x-x1)**2)+abs((y-y1)**2)))
-ref_ratio = [x/y for x,y in permutations(refdistances,2)]
+ref_ratio = [x/y for x,y in itertools.permutations(refdistances,2)]
+rounded_ref = [round(num, 10) for num in ref_ratio]
 
-stars_img = cv2.imread("orion-3.jpg")
+
+stars_img = cv2.imread("Sky-view-constellation-Orion.webp")
 
 # Setting up the frame to rotate without being cut out
 diagonal = int(math.sqrt(pow(stars_img.shape[0], 2) + pow(stars_img.shape[1], 2)))
@@ -45,7 +43,7 @@ def rotate(frame, angle, point=None):
 frame = cv2.copyMakeBorder(stars_img, pad_vertical, pad_vertical, pad_horizontal, pad_horizontal, cv2.BORDER_CONSTANT, value=[0, 0, 0])
 
 gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-ret, thresh = cv2.threshold(gray, 175, 255, cv2.THRESH_BINARY)
+ret, thresh = cv2.threshold(gray, 225, 300, cv2.THRESH_BINARY)
 
 contours, heirarchies = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
@@ -74,17 +72,17 @@ if len(centers) > 100:
             x,y = centers[a]
             cv2.circle(recolor, (x,y), 3, (0,0,255), 2)
             bright_stars.append((x,y))
-    for i in range(len(bright_stars)-1):
-        cv2.line(recolor, bright_stars[i], bright_stars[i+1], (0, 0, 255), 2)
+
 else:
     for x,y in centers:
         cv2.circle(recolor, (x,y), 3, (0,0,255), 2)
     for i in range(len(centers)-1):
         cv2.line(recolor, centers[i], centers[i+1], (0, 0, 255), 2)
+    bright_stars = centers
 
 
 # List of all distances between all stars
-starpairs = [tuple(x + y) for x, y in permutations(bright_stars, 2)]
+starpairs = [tuple(x + y) for x, y in itertools.combinations(bright_stars, 2)]
 distances = []
 
 for i in range(len(starpairs)):
@@ -92,9 +90,19 @@ for i in range(len(starpairs)):
     distances.append(math.sqrt(abs((x-x1)**2)+abs((y-y1)**2)))
 
 # ratio between distances
-star_ratio = [x/y for x,y in permutations(distances,2)]
+star_ratio = [x/y for x,y in itertools.permutations(distances,2)]
+rounded_stars = [round(num, 10) for num in star_ratio]
 
-print(ref_ratio)
+
+# cross referencing reference with image
+matches = [item for item in rounded_stars if item in rounded_ref]
+
+print(len(rounded_stars))
+print(len(rounded_ref))
+print(len(matches))
+
+cv2.imshow("Reference", ref_img)
 cv2.imshow("", recolor)
+
 
 cv2.waitKey(0)
