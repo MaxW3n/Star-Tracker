@@ -66,32 +66,30 @@ class image_input():
 ref_img = image_input(cv2.imread("orion-3.jpg"))
 orion_img = image_input(cv2.imread("Orion-Constellation-1024x576.jpg"))
 negative_img = image_input(cv2.imread("negative.jpg"))
+neg2_img = image_input(cv2.imread("635967554402822782-bigdipper.webp"))
 
 rounded_ref = ref_img.ratiolist
 rounded_stars = orion_img.ratiolist
+rounded_neg2 = neg2_img.ratiolist
 rounded_negative = negative_img.ratiolist
 
-ref_img_dis = ref_img.imshow
-orion_img_dis = orion_img.imshow
-neg_img_dis = negative_img.imshow
+def match(list1,list2,name):
+    # cross referencing reference with image
+    matches = [item for item in list1 if item in list2]
+    print("Ref:",len(list2))
+    print(name,"Test:",len(list1))
+    print("Matches:",len(matches))
+    print("Match %:",len(matches)/len(list1)*100)
 
+match(rounded_stars,rounded_ref,"Orion")
+match(rounded_negative,rounded_ref,"Negative")
+match(rounded_neg2,rounded_ref,"Negative2")
 
-
-
-# cross referencing reference with image
-matches = [item for item in rounded_stars if item in rounded_ref]
-
-print("Ref:",len(rounded_ref))
-print("Orion Test:",len(rounded_stars))
-print("Matches:",len(matches))
-print("Match %:",len(matches)/len(rounded_stars)*100)
-matches = [item for item in rounded_negative if item in rounded_ref]
-print("Negative:",len(rounded_negative))
-print("Matches:",len(matches))
-print("Match %:",len(matches)/len(rounded_negative)*100)
-
-cv2.imshow("", ref_img_dis)
-cv2.imshow("", orion_img_dis)
-cv2.imshow("", neg_img_dis)
-
+cv2.imshow("", ref_img.imshow)
+cv2.waitKey(0)
+cv2.imshow("", orion_img.imshow)
+cv2.waitKey(0)
+cv2.imshow("", negative_img.imshow)
+cv2.waitKey(0)
+cv2.imshow("", neg2_img.imshow)
 cv2.waitKey(0)
