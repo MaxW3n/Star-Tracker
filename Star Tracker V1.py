@@ -65,31 +65,22 @@ class image_input():
 
 ref_img = image_input(cv2.imread("orion-3.jpg"))
 orion_img = image_input(cv2.imread("Orion-Constellation-1024x576.jpg"))
+orion2_img = image_input(cv2.imread("Orion2.jpg"))
 negative_img = image_input(cv2.imread("negative.jpg"))
 neg2_img = image_input(cv2.imread("635967554402822782-bigdipper.webp"))
 
-rounded_ref = ref_img.ratiolist
-rounded_stars = orion_img.ratiolist
-rounded_neg2 = neg2_img.ratiolist
-rounded_negative = negative_img.ratiolist
 
-def match(list1,list2,name):
+def match(list1,list2,list1img,name):
     # cross referencing reference with image
     matches = [item for item in list1 if item in list2]
     print("Ref:",len(list2))
     print(name,"Test:",len(list1))
     print("Matches:",len(matches))
     print("Match %:",len(matches)/len(list1)*100)
+    cv2.imshow("", list1img)
+    cv2.waitKey(0)
 
-match(rounded_stars,rounded_ref,"Orion")
-match(rounded_negative,rounded_ref,"Negative")
-match(rounded_neg2,rounded_ref,"Negative2")
-
-cv2.imshow("", ref_img.imshow)
-cv2.waitKey(0)
-cv2.imshow("", orion_img.imshow)
-cv2.waitKey(0)
-cv2.imshow("", negative_img.imshow)
-cv2.waitKey(0)
-cv2.imshow("", neg2_img.imshow)
-cv2.waitKey(0)
+match(orion_img.ratiolist, ref_img.ratiolist, orion_img.imshow, "Orion")
+match(orion2_img.ratiolist, ref_img.ratiolist, orion2_img.imshow, "Orion2")
+match(negative_img.ratiolist, ref_img.ratiolist, negative_img.imshow, "Negative")
+match(neg2_img.ratiolist, ref_img.ratiolist, neg2_img.imshow, "Negative2")
