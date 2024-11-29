@@ -7,12 +7,8 @@ import itertools
 class image_input():
     def __init__(self, stars_img):
         self.stars_img = stars_img
-        # Setting up the frame to rotate without being cut out
-        diagonal = int(math.sqrt(pow(stars_img.shape[0], 2) + pow(stars_img.shape[1], 2)))
-        pad_vertical = max(0, (diagonal - stars_img.shape[0]) // 2)
-        pad_horizontal = max(0, (diagonal - stars_img.shape[1]) // 2)
-
-        frame = cv2.copyMakeBorder(stars_img, pad_vertical, pad_vertical, pad_horizontal, pad_horizontal, cv2.BORDER_CONSTANT, value=[0, 0, 0])
+        
+        frame = stars_img
 
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         ret, thresh = cv2.threshold(gray, 225, 300, cv2.THRESH_BINARY)
