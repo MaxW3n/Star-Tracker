@@ -71,18 +71,27 @@ rounded_ref = ref_img.ratiolist
 rounded_stars = orion_img.ratiolist
 rounded_negative = negative_img.ratiolist
 
+ref_img_dis = ref_img.imshow
+orion_img_dis = orion_img.imshow
+neg_img_dis = negative_img.imshow
+
+
+
+
 # cross referencing reference with image
 matches = [item for item in rounded_stars if item in rounded_ref]
 
 print("Ref:",len(rounded_ref))
 print("Orion Test:",len(rounded_stars))
 print("Matches:",len(matches))
+print("Match %:",len(matches)/len(rounded_stars)*100)
 matches = [item for item in rounded_negative if item in rounded_ref]
 print("Negative:",len(rounded_negative))
 print("Matches:",len(matches))
+print("Match %:",len(matches)/len(rounded_negative)*100)
 
-cv2.imshow("", ref_img.imshow)
-cv2.imshow("", orion_img.imshow)
-cv2.imshow("", negative_img.imshow)
+cv2.imshow("", ref_img_dis)
+cv2.imshow("", orion_img_dis)
+cv2.imshow("", neg_img_dis)
 
 cv2.waitKey(0)
