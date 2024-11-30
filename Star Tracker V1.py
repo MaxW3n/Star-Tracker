@@ -7,9 +7,9 @@ import itertools
 class image_input():
     def __init__(self, stars_img):
         self.stars_img = stars_img
-        
-        frame = stars_img
 
+        frame = stars_img
+        
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         ret, thresh = cv2.threshold(gray, 225, 300, cv2.THRESH_BINARY)
 
