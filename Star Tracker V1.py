@@ -40,7 +40,6 @@ class image_input():
                     x,y = centers[a]
                     cv2.circle(recolor, (x,y), 3, (0,0,255), 2)
                     bright_stars.append((x,y))
-
         else:
             for x,y in centers:
                 cv2.circle(recolor, (x,y), 3, (0,0,255), 2)
@@ -60,11 +59,19 @@ class image_input():
         self.ratiolist = [round(num, 10) for num in star_ratio]
 
 ref_img = image_input(cv2.imread("orion-3.jpg"))
+cv2.imshow("ref_img", ref_img.imshow)
+cv2.waitKey(0)
 orion_img = image_input(cv2.imread("Orion-Constellation-1024x576.jpg"))
+cv2.imshow("orion_img", orion_img.imshow)
+cv2.waitKey(0)
 orion2_img = image_input(cv2.imread("Orion2.jpg"))
+cv2.imshow("orion2_img", orion2_img.imshow)
+cv2.waitKey(0)
 negative_img = image_input(cv2.imread("negative.jpg"))
+cv2.imshow("negative_img", negative_img.imshow)
+cv2.waitKey(0)
 neg2_img = image_input(cv2.imread("635967554402822782-bigdipper.webp"))
-
+cv2.imshow("neg2_img", neg2_img.imshow)
 
 def match(list1,list2,list1img,name):
     # cross referencing reference with image
@@ -73,10 +80,9 @@ def match(list1,list2,list1img,name):
     print(name,"Test:",len(list1))
     print("Matches:",len(matches))
     print("Match %:",len(matches)/len(list1)*100)
-    cv2.imshow("", list1img)
-    cv2.waitKey(0)
 
 match(orion_img.ratiolist, ref_img.ratiolist, orion_img.imshow, "Orion")
 match(orion2_img.ratiolist, ref_img.ratiolist, orion2_img.imshow, "Orion2")
 match(negative_img.ratiolist, ref_img.ratiolist, negative_img.imshow, "Negative")
 match(neg2_img.ratiolist, ref_img.ratiolist, neg2_img.imshow, "Negative2")
+cv2.waitKey(0)
