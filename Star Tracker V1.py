@@ -60,18 +60,14 @@ class image_input():
 
 ref_img = image_input(cv2.imread("orion-3.jpg"))
 cv2.imshow("ref_img", ref_img.imshow)
-cv2.waitKey(0)
 orion_img = image_input(cv2.imread("Orion-Constellation-1024x576.jpg"))
 cv2.imshow("orion_img", orion_img.imshow)
-cv2.waitKey(0)
 orion2_img = image_input(cv2.imread("Orion2.jpg"))
 cv2.imshow("orion2_img", orion2_img.imshow)
-cv2.waitKey(0)
 negative_img = image_input(cv2.imread("negative.jpg"))
 cv2.imshow("negative_img", negative_img.imshow)
-cv2.waitKey(0)
 neg2_img = image_input(cv2.imread("635967554402822782-bigdipper.webp"))
-cv2.imshow("neg2_img", neg2_img.imshow)
+cv2.imshow("dipper_img", neg2_img.imshow)
 
 def match(list1,list2,list1img,name):
     # cross referencing reference with image
