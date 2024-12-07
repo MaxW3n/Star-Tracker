@@ -41,7 +41,7 @@ class image_input():
         if len(centers) > 100:
             # List of all stars that have above average brightness
             for a in range(len(centers)):
-                if star_brightness[a] > avg*3:
+                if star_brightness[a] > avg*3.5:
                     x,y = centers[a]
                     cv2.circle(recolor, (x,y), 3, (0,0,255), 2)
                     bright_stars.append((x,y))
