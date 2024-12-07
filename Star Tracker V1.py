@@ -33,7 +33,7 @@ class image_input():
         bright_stars = []
 
         # If there are more than 100 stars, then it will filter out the stars with below average brightness
-        if len(centers) > 100:
+        if len(centers) > 50:
             # List of all stars that have above average brightness
             for a in range(len(centers)):
                 if star_brightness[a] > avg*3:
@@ -60,12 +60,12 @@ class image_input():
 
 ref_img = image_input(cv2.imread("orion-3.jpg"))
 cv2.imshow("ref_img", ref_img.imshow)
-ref_img2 = image_input(cv2.imread("Big-Dipper-tracking-mount-May-22-2022-S-sharp.jpg"))
-cv2.imshow("ref_img2", ref_img2.imshow)
 orion_img = image_input(cv2.imread("Orion-Constellation-1024x576.jpg"))
 cv2.imshow("orion_img", orion_img.imshow)
 orion2_img = image_input(cv2.imread("Orion2.jpg"))
 cv2.imshow("orion2_img", orion2_img.imshow)
+orion3_img = image_input(cv2.imread("orion-beginner-guide-3a13918.jpg"))
+cv2.imshow("orion3_img", orion3_img.imshow)
 negative_img = image_input(cv2.imread("negative.jpg"))
 cv2.imshow("negative_img", negative_img.imshow)
 neg2_img = image_input(cv2.imread("Big-Dipper-1-1024x820.jpg"))
@@ -82,12 +82,8 @@ def match(list1,list2,name):
 print("Orion Matches:")
 match(orion_img.ratiolist, ref_img.ratiolist, "Orion")
 match(orion2_img.ratiolist, ref_img.ratiolist, "Orion2")
+match(orion3_img.ratiolist, ref_img.ratiolist, "Orion3")
 match(negative_img.ratiolist, ref_img.ratiolist, "Negative")
 match(neg2_img.ratiolist, ref_img.ratiolist, "Negative2")
-print("Big Dipper Matches:")
-match(orion_img.ratiolist, ref_img2.ratiolist, "Orion")
-match(orion2_img.ratiolist, ref_img2.ratiolist, "Orion2")
-match(negative_img.ratiolist, ref_img2.ratiolist, "Negative")
-match(neg2_img.ratiolist, ref_img2.ratiolist, "Negative2")
 
 cv2.waitKey(0)

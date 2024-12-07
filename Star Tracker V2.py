@@ -37,11 +37,11 @@ class image_input():
 
         bright_stars = []
 
-        # If there are more than 100 stars, then it will filter out the stars with below average brightness
-        if len(centers) > 100:
+        # If there are more than 10 stars, then it will filter out the stars with below average brightness
+        if len(centers) > 25:
             # List of all stars that have above average brightness
             for a in range(len(centers)):
-                if star_brightness[a] > avg*3.5:
+                if star_brightness[a] > avg*3:
                     x,y = centers[a]
                     cv2.circle(recolor, (x,y), 3, (0,0,255), 2)
                     bright_stars.append((x,y))
@@ -79,6 +79,8 @@ orion_img = image_input(cv2.imread("Orion-Constellation-1024x576.jpg"))
 cv2.imshow("orion_img", orion_img.imshow)
 orion2_img = image_input(cv2.imread("Orion2.jpg"))
 cv2.imshow("orion2_img", orion2_img.imshow)
+orion3_img = image_input(cv2.imread("orion-beginner-guide-3a13918.jpg"))
+cv2.imshow("orion3_img", orion3_img.imshow)
 negative_img = image_input(cv2.imread("negative.jpg"))
 cv2.imshow("negative_img", negative_img.imshow)
 bigdipper_img = image_input(cv2.imread('Big-Dipper-tracking-mount-May-22-2022-S-sharp.jpg'))
@@ -87,6 +89,7 @@ cv2.imshow("dipper_img", bigdipper_img.imshow)
 print("Orion Matches:")
 match(orion_img.anglist, reforion_img.anglist, "Orion")
 match(orion2_img.anglist, reforion_img.anglist, "Orion2")
+match(orion3_img.anglist, reforion_img.anglist, "Orion3")
 match(negative_img.anglist, reforion_img.anglist, "Negative")
 match(bigdipper_img.anglist, reforion_img.anglist, "Big Dipper")
 
