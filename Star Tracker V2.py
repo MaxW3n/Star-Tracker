@@ -63,18 +63,7 @@ class image_input():
             angles.append(angle_between(distance1, distance2, distance3))
 
         self.imshow = recolor
-        self.anglist = [round(num, 3) for num in angles]
-
-ref_img = image_input(cv2.imread("orion-3.jpg"))
-cv2.imshow("ref_img", ref_img.imshow)
-orion_img = image_input(cv2.imread("Orion-Constellation-1024x576.jpg"))
-cv2.imshow("orion_img", orion_img.imshow)
-orion2_img = image_input(cv2.imread("Orion2.jpg"))
-cv2.imshow("orion2_img", orion2_img.imshow)
-negative_img = image_input(cv2.imread("negative.jpg"))
-cv2.imshow("negative_img", negative_img.imshow)
-neg2_img = image_input(cv2.imread("635967554402822782-bigdipper.webp"))
-cv2.imshow("dipper_img", neg2_img.imshow)
+        self.anglist = [round(num, 4) for num in angles]
 
 def match(list1,list2,name):
     # cross referencing reference with image
@@ -84,8 +73,21 @@ def match(list1,list2,name):
     print("Matches:",len(matches))
     print("Match %:",len(matches)/len(list1)*100)
 
-match(orion_img.anglist, ref_img.anglist, "Orion")
-match(orion2_img.anglist, ref_img.anglist, "Orion2")
-match(negative_img.anglist, ref_img.anglist, "Negative")
-match(neg2_img.anglist, ref_img.anglist, "Negative2")
+reforion_img = image_input(cv2.imread("orion-3.jpg"))
+cv2.imshow("reforion_img", reforion_img.imshow)
+orion_img = image_input(cv2.imread("Orion-Constellation-1024x576.jpg"))
+cv2.imshow("orion_img", orion_img.imshow)
+orion2_img = image_input(cv2.imread("Orion2.jpg"))
+cv2.imshow("orion2_img", orion2_img.imshow)
+negative_img = image_input(cv2.imread("negative.jpg"))
+cv2.imshow("negative_img", negative_img.imshow)
+bigdipper_img = image_input(cv2.imread('Big-Dipper-tracking-mount-May-22-2022-S-sharp.jpg'))
+cv2.imshow("dipper_img", bigdipper_img.imshow)
+
+print("Orion Matches:")
+match(orion_img.anglist, reforion_img.anglist, "Orion")
+match(orion2_img.anglist, reforion_img.anglist, "Orion2")
+match(negative_img.anglist, reforion_img.anglist, "Negative")
+match(bigdipper_img.anglist, reforion_img.anglist, "Big Dipper")
+
 cv2.waitKey(0)

@@ -56,20 +56,22 @@ class image_input():
         # ratio between distances
         star_ratio = [x/y for x,y in itertools.permutations(distances,2)]
         self.imshow = recolor
-        self.ratiolist = [round(num, 10) for num in star_ratio]
+        self.ratiolist = [round(num, 8) for num in star_ratio]
 
 ref_img = image_input(cv2.imread("orion-3.jpg"))
 cv2.imshow("ref_img", ref_img.imshow)
+ref_img2 = image_input(cv2.imread("Big-Dipper-tracking-mount-May-22-2022-S-sharp.jpg"))
+cv2.imshow("ref_img2", ref_img2.imshow)
 orion_img = image_input(cv2.imread("Orion-Constellation-1024x576.jpg"))
 cv2.imshow("orion_img", orion_img.imshow)
 orion2_img = image_input(cv2.imread("Orion2.jpg"))
 cv2.imshow("orion2_img", orion2_img.imshow)
 negative_img = image_input(cv2.imread("negative.jpg"))
 cv2.imshow("negative_img", negative_img.imshow)
-neg2_img = image_input(cv2.imread("635967554402822782-bigdipper.webp"))
+neg2_img = image_input(cv2.imread("Big-Dipper-1-1024x820.jpg"))
 cv2.imshow("dipper_img", neg2_img.imshow)
 
-def match(list1,list2,list1img,name):
+def match(list1,list2,name):
     # cross referencing reference with image
     matches = [item for item in list1 if item in list2]
     print("Ref:",len(list2))
@@ -77,8 +79,15 @@ def match(list1,list2,list1img,name):
     print("Matches:",len(matches))
     print("Match %:",len(matches)/len(list1)*100)
 
-match(orion_img.ratiolist, ref_img.ratiolist, orion_img.imshow, "Orion")
-match(orion2_img.ratiolist, ref_img.ratiolist, orion2_img.imshow, "Orion2")
-match(negative_img.ratiolist, ref_img.ratiolist, negative_img.imshow, "Negative")
-match(neg2_img.ratiolist, ref_img.ratiolist, neg2_img.imshow, "Negative2")
+print("Orion Matches:")
+match(orion_img.ratiolist, ref_img.ratiolist, "Orion")
+match(orion2_img.ratiolist, ref_img.ratiolist, "Orion2")
+match(negative_img.ratiolist, ref_img.ratiolist, "Negative")
+match(neg2_img.ratiolist, ref_img.ratiolist, "Negative2")
+print("Big Dipper Matches:")
+match(orion_img.ratiolist, ref_img2.ratiolist, "Orion")
+match(orion2_img.ratiolist, ref_img2.ratiolist, "Orion2")
+match(negative_img.ratiolist, ref_img2.ratiolist, "Negative")
+match(neg2_img.ratiolist, ref_img2.ratiolist, "Negative2")
+
 cv2.waitKey(0)
