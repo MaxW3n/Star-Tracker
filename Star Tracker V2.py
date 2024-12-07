@@ -4,6 +4,7 @@ import math
 import statistics
 import itertools
 
+# Finds the angle between 3 points
 def angle_between(d1, d2, d3):
     ang = (d2**2 + d3**2 - d1**2)/(2*d2*d3)
     return math.degrees(math.acos(ang))
@@ -53,6 +54,7 @@ class image_input():
         starpairs = [tuple(x + y +z) for x, y, z in itertools.permutations(bright_stars, 3)]
         angles = []
 
+        # Finds the distances between 3 stars and the angle between them
         for i in range(len(starpairs)):
             x,y,x1,y1,x2,y2 = starpairs[i]
             distance1 = math.sqrt(abs((x-x1)**2)+abs((y-y1)**2))
