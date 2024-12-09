@@ -37,8 +37,8 @@ class image_input():
 
         bright_stars = []
 
-        # If there are more than 10 stars, then it will filter out the stars with below average brightness
-        if len(centers) > 25:
+        # If there are more than 50 stars, then it will filter out the stars with below average brightness
+        if len(centers) > 50:
             # List of all stars that have above average brightness
             for a in range(len(centers)):
                 if star_brightness[a] > avg*3:
